@@ -1,0 +1,276 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Panduan praktikum kolaborasi tim menggunakan Git, Git Bash, Visual Studio Code, dan GitHub.">
+<title>Panduan Praktikum Git & GitHub</title>
+<style>
+:root{--bg:#f5f7fb;--paper:#fff;--ink:#172033;--muted:#64748b;--line:#e5eaf1;--blue:#2457d6;--blue2:#eaf1ff;--green:#147d55;--code:#111827;--shadow:0 10px 30px rgba(15,23,42,.06)}
+*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:85px}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.72 Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif}
+a{color:var(--blue);text-decoration:none}a:hover{text-decoration:underline}
+header{position:sticky;top:0;z-index:5;background:rgba(255,255,255,.94);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.top{max-width:1200px;margin:auto;padding:13px 24px;display:flex;justify-content:space-between;align-items:center;gap:14px}
+.brand{font-weight:800;letter-spacing:-.03em}.brand span{color:var(--blue)}
+.top-actions{display:flex;gap:9px;align-items:center}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:10px 15px;border:1px solid var(--line);border-radius:10px;background:#fff;color:var(--ink);font-weight:700;cursor:pointer}
+.btn.primary{background:var(--blue);border-color:var(--blue);color:#fff}.btn:hover{filter:brightness(.97);text-decoration:none}
+.layout{max-width:1200px;margin:auto;padding:30px 24px 70px;display:grid;grid-template-columns:245px minmax(0,820px);gap:34px;justify-content:center}
+nav{position:sticky;top:80px;align-self:start;max-height:calc(100vh - 100px);overflow:auto;padding:14px 8px}
+nav strong{display:block;padding:0 10px 10px;color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:.12em}
+nav a{display:block;padding:7px 10px;margin:2px 0;border-radius:8px;color:#526078;font-size:13px;line-height:1.4}
+nav a:hover{background:var(--blue2);text-decoration:none;color:var(--blue)}
+main{min-width:0}
+.hero{padding:34px 36px;border-radius:19px;background:linear-gradient(135deg,#10264e,#2457d6);color:#fff;box-shadow:var(--shadow);margin-bottom:22px}
+.kicker{text-transform:uppercase;letter-spacing:.13em;font-size:11px;font-weight:800;color:#c9dcff}
+h1{font-size:clamp(30px,5vw,43px);line-height:1.12;letter-spacing:-.045em;margin:10px 0 13px}
+.hero p{margin:0;color:#e2eaff;max-width:660px}
+.meta{display:flex;flex-wrap:wrap;gap:8px;margin-top:20px}.pill{font-size:12px;font-weight:700;padding:5px 10px;border:1px solid #ffffff44;border-radius:99px;color:#edf3ff}
+article{background:var(--paper);border:1px solid var(--line);border-radius:18px;padding:clamp(22px,4vw,42px);box-shadow:var(--shadow)}
+h2{font-size:25px;line-height:1.25;letter-spacing:-.025em;margin:42px 0 14px;padding-bottom:10px;border-bottom:1px solid var(--line)}
+h2:first-child{margin-top:0}h3{font-size:18px;margin:25px 0 8px}
+p{margin:10px 0}ul,ol{padding-left:24px}li{margin:7px 0}
+.callout{padding:14px 17px;border-radius:11px;background:var(--blue2);border-left:4px solid var(--blue);margin:16px 0}
+.note{padding:14px 17px;border-radius:11px;background:#f0fdf6;border-left:4px solid var(--green);margin:16px 0}
+.warning{padding:14px 17px;border-radius:11px;background:#fff8e8;border-left:4px solid #d99a20;margin:16px 0}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:15px 0}
+.resource{border:1px solid var(--line);border-radius:12px;padding:15px}
+.resource b{display:block;margin-bottom:3px}.resource small{color:var(--muted)}
+.resource a{display:inline-block;margin-top:9px;font-weight:750}
+pre{background:var(--code);color:#e5e7eb;padding:17px 19px;border-radius:11px;overflow:auto;line-height:1.65;margin:13px 0 19px}
+code{font-family:ui-monospace,SFMono-Regular,Consolas,monospace;font-size:.91em}
+p code,li code{background:#edf1f7;color:#27364b;padding:2px 5px;border-radius:5px}
+pre code{background:none;color:inherit;padding:0}
+table{width:100%;border-collapse:collapse;margin:14px 0;display:block;overflow-x:auto}
+th,td{border:1px solid var(--line);padding:10px 12px;text-align:left;vertical-align:top;min-width:130px}
+th{background:#f7f9fc}
+.checklist li{list-style:none;margin-left:-22px}.checklist li:before{content:"☐";display:inline-block;width:24px;color:var(--blue);font-weight:800}
+.submit{border:1px solid #d9e4fb;background:#f5f8ff;padding:22px;border-radius:15px;margin-top:18px}
+.submit h3{margin-top:0}
+footer{text-align:center;color:var(--muted);font-size:12px;padding:22px}
+@media(max-width:850px){.layout{grid-template-columns:1fr;padding:18px 13px 50px;gap:12px}nav{position:static;max-height:none;display:flex;overflow:auto;white-space:nowrap;background:#fff;border:1px solid var(--line);border-radius:12px;padding:9px}nav strong{display:none}nav a{padding:7px 9px}.hero{padding:26px 22px}article{padding:22px 18px}.grid{grid-template-columns:1fr}}
+@media print{header,nav,.top-actions{display:none!important}.layout{display:block;padding:0;max-width:none}.hero{background:#fff;color:#111;box-shadow:none;padding:0}.hero p,.kicker{color:#333}.hero .pill{border-color:#aaa;color:#333}article{box-shadow:none;border:0;padding:0}body{background:#fff}}
+</style>
+</head>
+<body>
+<header><div class="top">
+  <div class="brand">HMIF <span>·</span> Workshop Semester 0</div>
+  <div class="top-actions"><button class="btn" onclick="window.print()">Cetak / Simpan PDF</button></div>
+</div></header>
+<div class="layout">
+<nav aria-label="Daftar isi">
+<strong>Daftar isi</strong>
+<a href="#tujuan">Tujuan praktikum</a>
+<a href="#persiapan">Persiapan dan instalasi</a>
+<a href="#gitbash">Konfigurasi Git Bash</a>
+<a href="#github-web">Membuat repository</a>
+<a href="#kolaborasi">Mengundang kolaborator</a>
+<a href="#praktik">Praktik kolaborasi</a>
+<a href="#pull-request">Pull Request dan review</a>
+<a href="#merge">Merge dan verifikasi</a>
+<a href="#pengumpulan">Pengumpulan</a>
+</nav>
+<main>
+<section class="hero">
+  <div class="kicker">Panduan praktikum</div>
+  <h1>Kolaborasi Tim dengan Git &amp; GitHub</h1>
+  <p>Ikuti panduan ini dari persiapan perangkat, konfigurasi Git, membuat repository bersama, hingga mengirim Pull Request dan mengumpulkan hasil praktikum.</p>
+  <div class="meta"><span class="pill">Hands-on practice</span><span class="pill">30–60 menit</span><span class="pill">Git · Git Bash · VS Code · GitHub</span></div>
+</section>
+<article>
+<h2 id="tujuan">Tujuan Praktikum</h2>
+<p>Setelah menyelesaikan praktikum, setiap peserta diharapkan mampu menggunakan Git untuk mencatat perubahan kode atau dokumen, mengelola branch, mengirim perubahan ke GitHub, serta bekerja bersama anggota tim melalui Pull Request.</p>
+<div class="callout"><b>Gambaran alur kerja:</b> buat repository di GitHub → undang anggota tim → clone repository → buat branch → ubah file → commit → push → Pull Request → review → merge.</div>
+
+<h2 id="persiapan">1. Persiapan dan Instalasi</h2>
+<p>Siapkan komputer atau laptop, koneksi internet, browser, akun GitHub, Git, dan Visual Studio Code. Panduan instalasi berikut ditujukan terutama untuk pengguna Windows.</p>
+<div class="grid">
+  <div class="resource">
+    <b>Git for Windows</b>
+    <small>Git menyediakan Git Bash, Git, dan Git Credential Manager.</small><br>
+    <a href="https://git-scm.com/downloads/win" target="_blank" rel="noopener">Download Git for Windows ↗</a>
+  </div>
+  <div class="resource">
+    <b>Visual Studio Code</b>
+    <small>Editor untuk membuat dan mengubah file proyek.</small><br>
+    <a href="https://code.visualstudio.com/Download" target="_blank" rel="noopener">Download VS Code ↗</a>
+  </div>
+  <div class="resource">
+    <b>Akun GitHub</b>
+    <small>Gunakan akun pribadi yang dapat menerima undangan repository.</small><br>
+    <a href="https://github.com/signup" target="_blank" rel="noopener">Buat akun GitHub ↗</a>
+  </div>
+  <div class="resource">
+    <b>Browser</b>
+    <small>Chrome, Firefox, Edge, atau browser modern lainnya.</small><br>
+    <small>Tidak perlu instalasi tambahan.</small>
+  </div>
+</div>
+<h3>Instal Git</h3>
+<ol>
+<li>Buka halaman download Git for Windows melalui tautan di atas.</li>
+<li>Unduh installer, lalu jalankan file installer.</li>
+<li>Ikuti proses instalasi. Jika belum memahami opsi lanjutan, gunakan pengaturan bawaan installer.</li>
+<li>Setelah selesai, buka Start Menu dan cari <b>Git Bash</b>.</li>
+</ol>
+<h3>Instal Visual Studio Code</h3>
+<ol>
+<li>Unduh installer dari situs resmi VS Code.</li>
+<li>Jalankan installer dan ikuti petunjuknya.</li>
+<li>Jika tersedia, aktifkan opsi <b>Add to PATH</b> dan opsi membuka folder dengan VS Code.</li>
+<li>Buka VS Code setelah instalasi selesai.</li>
+</ol>
+<div class="note"><b>Opsional:</b> Di VS Code, buka tab Extensions dan instal ekstensi <b>GitHub Pull Requests</b> jika ingin mengelola Pull Request dari editor. Praktikum ini tetap dapat diselesaikan melalui browser GitHub.</div>
+
+<h2 id="gitbash">2. Konfigurasi Git Bash dan Identitas Git</h2>
+<p>Git Bash adalah terminal untuk menjalankan perintah Git. Buka Git Bash dari Start Menu Windows.</p>
+<h3>Periksa instalasi</h3>
+<pre><code>git --version
+git --help</code></pre>
+<p>Jika versi Git tampil, instalasi berhasil.</p>
+<h3>Atur nama dan email untuk commit</h3>
+<p>Gunakan nama dan email yang ingin ditampilkan pada riwayat commit. Sebaiknya gunakan email yang terhubung ke akun GitHub.</p>
+<pre><code>git config --global user.name "Nama Lengkap"
+git config --global user.email "email-kamu@example.com"</code></pre>
+<p>Periksa konfigurasi:</p>
+<pre><code>git config --global --list</code></pre>
+<h3>Apakah harus login GitHub di Git Bash?</h3>
+<p>Konfigurasi <code>user.name</code> dan <code>user.email</code> di atas adalah identitas pembuat commit, bukan proses login. Untuk autentikasi saat mengirim perubahan ke GitHub, Git Credential Manager biasanya akan membuka browser agar kamu masuk ke akun GitHub dan memberikan otorisasi.</p>
+<ol>
+<li>Pastikan kamu sudah login ke GitHub melalui browser.</li>
+<li>Saat pertama kali menjalankan perintah <code>git push</code>, ikuti permintaan autentikasi yang muncul.</li>
+<li>Jika browser terbuka, login ke akun GitHub yang benar dan setujui otorisasi.</li>
+<li>Kembali ke Git Bash setelah proses selesai.</li>
+</ol>
+<div class="warning"><b>Keamanan:</b> Jangan memasukkan password akun GitHub, Personal Access Token, atau kode autentikasi ke file proyek maupun membagikannya kepada anggota lain. Ikuti jendela autentikasi resmi yang dibuka Git Credential Manager.</div>
+
+<h2 id="github-web">3. Membuat Repository melalui Website GitHub</h2>
+<p>Satu orang bertindak sebagai ketua tim untuk membuat repository bersama. Seluruh anggota lain akan diundang sebagai collaborator.</p>
+<ol>
+<li>Buka <a href="https://github.com" target="_blank" rel="noopener">github.com</a> dan login.</li>
+<li>Klik tombol <b>+</b> di kanan atas, lalu pilih <b>New repository</b>. Kamu juga dapat membuka halaman <a href="https://github.com/new" target="_blank" rel="noopener">Create a new repository</a>.</li>
+<li>Isi konfigurasi repository berikut.</li>
+</ol>
+<table>
+<thead><tr><th>Kolom</th><th>Isi</th></tr></thead>
+<tbody>
+<tr><td>Repository name</td><td><code>praktikum-kolaborasi</code></td></tr>
+<tr><td>Description</td><td>Latihan kolaborasi Git dan GitHub</td></tr>
+<tr><td>Visibility</td><td>Public, kecuali pengajar meminta Private</td></tr>
+<tr><td>Add a README file</td><td>Centang</td></tr>
+</tbody>
+</table>
+<ol start="4">
+<li>Klik <b>Create repository</b>.</li>
+<li>Salin URL repository. Contohnya <code>https://github.com/username/praktikum-kolaborasi.git</code>.</li>
+</ol>
+<div class="callout"><b>Checkpoint:</b> Repository berhasil dibuat dan ketua tim sudah menyalin URL repository.</div>
+
+<h2 id="kolaborasi">4. Mengundang Anggota sebagai Collaborator</h2>
+<p>Langkah ini dilakukan oleh pemilik repository atau ketua tim yang memiliki hak akses pengaturan repository.</p>
+<ol>
+<li>Buka halaman repository yang baru dibuat.</li>
+<li>Pilih tab <b>Settings</b>.</li>
+<li>Pada menu samping, buka <b>Collaborators</b> atau bagian <b>Collaborators and teams</b>.</li>
+<li>Klik <b>Add people</b>.</li>
+<li>Masukkan username atau email GitHub anggota tim.</li>
+<li>Pilih akun yang benar, lalu kirim undangan.</li>
+<li>Minta setiap anggota membuka notifikasi atau email GitHub dan menerima undangan tersebut.</li>
+</ol>
+<div class="note"><b>Checkpoint:</b> Pastikan seluruh anggota sudah menerima undangan dan memiliki akses untuk melakukan push ke repository.</div>
+
+<h2 id="praktik">5. Clone Repository dan Membuat Branch</h2>
+<p>Setiap anggota mengerjakan langkah berikut di komputer masing-masing. Ganti URL repository dan nama branch sesuai tim.</p>
+<h3>Clone repository</h3>
+<p>Buka Git Bash, pindah ke folder tempat kamu menyimpan proyek, lalu jalankan:</p>
+<pre><code>cd ~/Documents
+git clone https://github.com/USERNAME/praktikum-kolaborasi.git
+cd praktikum-kolaborasi
+code .</code></pre>
+<p>Perintah <code>code .</code> membuka folder proyek di VS Code. Jika perintah tersebut belum dikenali, buka VS Code secara manual lalu pilih <b>File → Open Folder</b>.</p>
+<h3>Buat branch pribadi</h3>
+<p>Setiap anggota wajib memakai nama branch yang berbeda. Gunakan huruf kecil dan hindari spasi.</p>
+<pre><code>git switch -c feature/nama-kamu</code></pre>
+<p>Contoh:</p>
+<pre><code>git switch -c feature/razi</code></pre>
+<h3>Buat file kontribusi masing-masing</h3>
+<p>Agar perubahan antaranggota tidak saling menimpa, setiap orang membuat file sendiri di dalam folder <code>anggota</code>. Di VS Code, buat folder <code>anggota</code>, lalu buat file dengan nama masing-masing, misalnya <code>anggota/razi.md</code>.</p>
+<pre><code># Profil Anggota
+
+- Nama: Nama Lengkap
+- NIM: NIM Kamu
+- Program Studi: Informatika
+- Kontribusi: Menjelaskan kontribusi dalam tim</code></pre>
+<p>Simpan file tersebut. Pastikan nama file berbeda untuk setiap anggota, misalnya <code>anggota/budi.md</code> dan <code>anggota/siti.md</code>.</p>
+<h3>Periksa perubahan dan buat commit</h3>
+<pre><code>git status
+git add anggota/nama-kamu.md
+git commit -m "feat: add member profile"</code></pre>
+<p>Ganti <code>nama-kamu.md</code> sesuai nama file yang dibuat. Commit menyimpan snapshot perubahan ke riwayat Git lokal.</p>
+<h3>Kirim branch ke GitHub</h3>
+<pre><code>git push -u origin feature/nama-kamu</code></pre>
+<p>Jika diminta autentikasi, ikuti proses login browser seperti pada bagian konfigurasi Git Bash.</p>
+<div class="callout"><b>Checkpoint:</b> Branch pribadi muncul di GitHub dan file profil milikmu sudah terlihat pada branch tersebut.</div>
+
+<h2 id="pull-request">6. Membuat Pull Request dan Melakukan Review</h2>
+<p>Pull Request (PR) digunakan untuk mengusulkan perubahan dari branch pribadi agar dapat digabungkan ke branch utama.</p>
+<h3>Membuat Pull Request</h3>
+<ol>
+<li>Buka repository di GitHub.</li>
+<li>Pilih tab <b>Pull requests</b>, lalu klik <b>New pull request</b>.</li>
+<li>Atur perbandingan branch.</li>
+</ol>
+<table>
+<thead><tr><th>Pengaturan</th><th>Pilih</th></tr></thead>
+<tbody><tr><td>Base</td><td><code>main</code></td></tr><tr><td>Compare</td><td><code>feature/nama-kamu</code></td></tr></tbody>
+</table>
+<ol start="4">
+<li>Pastikan daftar perubahan yang tampil sesuai dengan file yang kamu buat.</li>
+<li>Isi judul, misalnya <code>Add member profile - Razi</code>.</li>
+<li>Tulis ringkasan singkat, lalu klik <b>Create pull request</b>.</li>
+</ol>
+<h3>Review oleh anggota lain</h3>
+<ol>
+<li>Minta minimal satu anggota tim membuka Pull Request tersebut.</li>
+<li>Reviewer membuka tab <b>Files changed</b>.</li>
+<li>Periksa nama file, isi profil, dan kesesuaian perubahan.</li>
+<li>Berikan komentar jika ada yang perlu diperbaiki.</li>
+<li>Jika sudah sesuai, reviewer dapat memberikan approval apabila fitur tersebut tersedia dan diizinkan.</li>
+</ol>
+<div class="note"><b>Checkpoint:</b> Pull Request sudah dibuat dan diperiksa oleh anggota lain sebelum digabungkan.</div>
+
+<h2 id="merge">7. Merge dan Verifikasi Hasil</h2>
+<p>Setelah review selesai, ketua tim atau anggota yang diberi wewenang dapat menggabungkan Pull Request.</p>
+<ol>
+<li>Buka Pull Request yang sudah direview.</li>
+<li>Klik <b>Merge pull request</b>.</li>
+<li>Konfirmasi dengan <b>Confirm merge</b>.</li>
+<li>Ulangi proses untuk Pull Request anggota lainnya.</li>
+</ol>
+<p>Setelah semua PR digabungkan, setiap anggota memperbarui branch utama di komputer masing-masing:</p>
+<pre><code>git switch main
+git pull origin main
+git log --oneline</code></pre>
+<p>Buka folder <code>anggota</code> di VS Code atau File Explorer. Pastikan file profil semua anggota sudah tersedia di branch <code>main</code>.</p>
+<h2 id="pengumpulan">8. Pengumpulan Tugas</h2>
+<p>Ketua tim memastikan seluruh proses kolaborasi selesai, lalu mengumpulkan tautan dan bukti pengerjaan.</p>
+<div class="submit">
+  <h3>Form Pengumpulan Praktikum</h3>
+  <a class="btn primary" id="driveButton" href="https://forms.gle/ePCiHHbicN3QTHXw6" aria-disabled="true" onclick="return false;" title="Kumpul">Form Pengumpulan</a>
+
+</div>
+<h3>Berkas yang dikumpulkan</h3>
+<ol>
+<li>Link repository GitHub kelompok</li>
+<li>Screenshot daftar branch dan commit history.</li>
+<li>Daftar nama dan NIM seluruh anggota.</li>
+</ol>
+>
+<div class="warning"><b>Catatan akhir:</b> Jangan mengunggah password, API key, token, data pribadi sensitif, atau file rahasia ke repository. Jika menemui kendala, catat pesan error dan diskusikan dengan tim atau pengajar.</div>
+</article>
+<footer>Workshop Semester 0 · HMIF · Panduan Praktikum Git &amp; GitHub</footer>
+</main>
+</div>
+</body>
+</html>
